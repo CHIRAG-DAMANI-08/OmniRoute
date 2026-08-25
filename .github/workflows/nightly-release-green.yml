@@ -216,7 +216,7 @@ jobs:
     name: Validate main branch
     # On a push, only run for a push to main — a push to release/* is handled by
     # release-green above. Schedule/dispatch always run (they also sweep main).
-    if: ${{ github.event_name != 'push' || github.ref_name == 'main' }}
+    if: ${{ (github.event_name != 'push' || github.ref_name == 'main') && github.event.repository.default_branch == 'main' }}
     runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && fromJSON('["self-hosted","omni-release"]')) || 'ubuntu-latest' }}
     env:
       JWT_SECRET: ci-nightly-secret-with-sufficient-length-for-validation
